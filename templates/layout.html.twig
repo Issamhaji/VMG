@@ -1,0 +1,66 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+            <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+
+<nav class="site-nav bg-gray-800 text-white py-4 mb-8">
+    <div class="container mx-auto">
+        <div class="site-navigation flex justify-between items-center">
+            <div class="text-center">
+                <a href="{{ url('app_home') }}" class="logo text-2xl font-semibold text-white">Home</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <form>
+                    {% if app.user is null %}
+                        <a href="{{ url('app_login') }}" class="btn btn-primary btn-sm">Login</a>
+                    {% else %}
+                        <a href="{{ url('app_logout') }}" class="btn btn-primary btn-sm">LogOut</a>
+                    {% endif %}
+                </form>
+
+                {% if app.user is not null %}
+                <ul class="list-unstyled flex gap-4">
+                    <li><a href="{{ url('app_list' , {id: app.user.id}) }}" class="text-white">My Cars</a></li>
+                </ul>
+                {% endif %}
+
+
+
+                <a href="#" class="burger site-menu-toggle">
+                    <span class="icon-menu text-white"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% for label, messages in app.flashes %}
+    <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 my-4 rounded-md shadow">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+
+
+{% block content %}{% endblock %}
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full space-y-8 p-8 bg-white shadow-md rounded-md">
+            <h2 class="text-3xl font-extrabold text-center text-gray-800">Login</h2>
+
+            {% if error %}
+                <div class="text-red-600 text-center py-2">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md"><a href="{{ path('app_logout') }}">Logout</a></button>
+                    </div>
+            {% endif %}
+
+            <form method="post" action="{{ path('app_login') }}" class="mt-8 space-y-6">
+
+                <div>
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" id="username" name="_username" class="w-full border rounded-md py-2 px-3" value="{{ last_username }}" required autofocus placeholder="Username">
+                </div>
+
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="_password" class="w-full border rounded-md py-2 px-3" required placeholder="Password">
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

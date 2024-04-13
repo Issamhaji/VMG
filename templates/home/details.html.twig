@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Cars DEtails{% endblock %}
+
+{% block content %}
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-semibold mb-4">Car Details</h1>
+
+        <div class="bg-white p-6 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-2">{{ car.brand }}</h2>
+            
+            {% if availability[car.id] == 0 %}
+                <div class="availability-indicator bg-red-500 rounded-full w-8 h-8 flex items-center justify-center mb-4">
+                    <span class="text-white">N/A</span>
+                </div>
+                <p class="text-red-500"><strong>Non Disponible</strong></p>
+            {% else %}
+                <div class="availability-indicator bg-green-500 rounded-full w-8 h-8 flex items-center justify-center mb-4">
+                    <span class="text-white">Available</span>
+                </div>
+                <p class="text-green-500"><strong>Disponible</strong></p>
+            {% endif %}
+            
+            {% if car.reservations|length > 0 %}
+                <h3 class="text-lg font-semibold mt-4">Latest Reservation:</h3>
+                {% set latestReservation = car.reservations|sort((a, b) => a.dateEnd < b.dateEnd ? 1 : -1)|first %}
+                <p><strong>Date End:</strong> {{ latestReservation.dateEnd|date('Y-m-d H:i:s') }}</p>
+            {% else %}
+                <p>No upcoming reservations for this car.</p>
+            {% endif %}
+ 
+        </div>
+    </div>
+{% endblock %}
